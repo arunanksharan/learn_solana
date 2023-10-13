@@ -9,7 +9,7 @@ console.log("Loaded Keypair Successfully from env file!");
 console.log(`PublicKey: ${loaded_keypair.publicKey.toBase58()}`);
 console.log(`Private Key: ${loaded_keypair.secretKey.toString()}`);
 
-// const new_keypair = Keypair.generate();
-// console.log("Generated Keypair Successfully!")
-// console.log(`PublicKey: ${new_keypair.publicKey.toBase58()}`);
-// console.log(`Private Key: ${new_keypair.secretKey.toString()}`);
+const new_keypair = Keypair.generate();
+console.log("Generated Keypair Successfully!");
+console.log(`PublicKey: ${new_keypair.publicKey.toBase58()}`);
+console.log(`Private Key: ${new_keypair.secretKey.toString()}`);
