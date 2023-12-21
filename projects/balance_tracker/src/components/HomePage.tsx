@@ -19,11 +19,15 @@ const HomePage: React.FC = () => {
   >([]);
   const [invalidAddress, setInvalidAddress] = useState<boolean>(false);
   const [addressError, setAddressError] = useState<string | null>(null);
+  const [accountInfoState, setAccountInfo] = useState<boolean>(false);
 
   // Console Log addressBalanceMapping
   useEffect(() => {
     console.log(`Inside useeffect: ${JSON.stringify(addressBalanceMapping)}`);
-  }, [addressBalanceMapping]);
+    console.log(
+      `Inside useeffect for accountinfo: ${JSON.stringify(accountInfoState)}`
+    );
+  }, [addressBalanceMapping, accountInfoState]);
 
   const addressSubmittedHandler = async (address: string) => {
     try {
@@ -32,7 +36,10 @@ const HomePage: React.FC = () => {
       const connection = new web3.Connection(web3.clusterApiUrl("devnet"));
       const balance = await connection.getBalance(publicKey);
       setBalance(balance / web3.LAMPORTS_PER_SOL);
-      console.log(balance);
+      const accountInfo = await connection.getAccountInfo(publicKey);
+      setAccountInfo(accountInfo?.executable ?? false);
+      //   console.log(accountInfo);
+      //   console.log(balance);
       setAddressBalanceMapping((prevState) => {
         return [...prevState, { address, balance }];
       });
@@ -40,6 +47,8 @@ const HomePage: React.FC = () => {
       setAddressError(null);
     } catch (error: any) {
       console.log(error);
+      setBalance(0);
+      setAddress("");
       setAddressError(error.message);
     }
   };
@@ -51,6 +60,7 @@ const HomePage: React.FC = () => {
       {addressError && <p className="text-red-500">{addressError}</p>}
       {/* <p>{`Address: ${address}`}</p>
       <p>{`Balance: ${balance}`}</p> */}
+      <p>{`Is it executable? ${accountInfoState ? "Yass" : "Nope"}`}</p>
       <BalanceList addressBalanceList={addressBalanceMapping}></BalanceList>
     </main>
   );
