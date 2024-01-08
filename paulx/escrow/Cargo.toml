@@ -1,0 +1,29 @@
+[package]
+name = "escrow"
+version = "0.1.0"
+edition = "2021"
+license = "WTFPL"
+publish = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+solana-program = "=1.16.1"
+thiserror = "1.0.24"
+spl-token = {version = "3.2.0", features = ["no-entrypoint"]}
+arrayref = "0.3.6"
+
+[features]
+test-bpf = []
+no-entrypoint = []
+
+[dev-dependencies]
+assert_matches = "1.4.0"
+solana-logger = "=1.16.1"
+solana-program-test = "=1.16.1"
+solana-sdk = "=1.16.1"
+solana-validator = "=1.16.1"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
